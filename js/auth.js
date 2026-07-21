@@ -4,19 +4,25 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   const signupForm = document.getElementById('signup-form');
-  // const loginForm = document.getElementById('login-form'); // We'll use this later
+  const loginForm = document.getElementById('login-form');
 
   if (signupForm) {
     signupForm.addEventListener('submit', handleSignUp);
+    attachDynamicErrorClearing(signupForm);
+  }
 
-    // Clear errors dynamically as the user types(bonus)
-    const inputs = signupForm.querySelectorAll('.form-group__input');
-    
+  if (loginForm) {
+    loginForm.addEventListener('submit', handleLogin);
+    attachDynamicErrorClearing(loginForm);
+  }
+
+  // Clear errors dynamically as the user types (bonus)
+  function attachDynamicErrorClearing(form) {
+    const inputs = form.querySelectorAll('.form-group__input');
     inputs.forEach(input => {
       input.addEventListener('input', function() {
         this.classList.remove('input-error');
-      
-        const errorSpan = signupForm.querySelector(`#${this.id}-error`);
+        const errorSpan = form.querySelector(`#${this.id}-error`);
         if (errorSpan) {
           errorSpan.textContent = '';
         }
@@ -102,6 +108,53 @@ function handleSignUp(event) {
       window.location.href = 'index.html';
     }, 1500);
   }
+}
+
+function handleLogin(event) {
+  event.preventDefault();
+
+  const form = event.target;
+  const email = form.email.value.trim().toLowerCase();
+  const password = form.password.value;
+
+  clearErrors(form);
+
+  let isValid = true;
+
+  // Basic empty checks
+  if (!email) {
+    showError(form, 'login-email', 'Email is required');
+    isValid = false;
+  }
+  if (!password) {
+    showError(form, 'login-password', 'Password is required');
+    isValid = false;
+  }
+
+  if (!isValid) return;
+
+  const users = getUsers();
+  const user = users.find(user => user.email === email);
+
+  if (!user || user.password !== password) {
+    showError(form, 'login-email', '');
+    showError(form, 'login-password', 'Invalid email or password');
+    return;
+  }
+
+  // Login successful -> Create session
+  saveSession({
+    userId: user.id,
+    email: user.email,
+    loginAt: new Date().toISOString()
+  });
+
+  showToast('Logged in successfully!', 'success');
+
+  // Redirect to dashboard
+  setTimeout(() => {
+    window.location.href = 'dashboard.html';
+  }, 1500);
 }
 
 // Helper to show error messages
