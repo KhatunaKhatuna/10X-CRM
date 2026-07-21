@@ -36,7 +36,11 @@ function handleSignUp(event) {
 
   // 1. Get form values
   const form = event.target;
+  const submitBtn = form.querySelector('.auth-form__submit-btn');
   
+  // Disable button to prevent double-submit
+  if (submitBtn) submitBtn.disabled = true;
+
   const fullName = form.fullName.value;
   const email = form.email.value;
   const company = form.company.value;
@@ -85,8 +89,13 @@ function handleSignUp(event) {
     isValid = false;
   }
 
+  // Re-enable button if validation failed
+  if (!isValid) {
+    if (submitBtn) submitBtn.disabled = false;
+    return;
+  }
+
   // 4. If valid, create user and save
-  if (isValid) {
     const newUser = {
       id: Date.now(),
       fullName: fullName.trim(),
@@ -107,13 +116,18 @@ function handleSignUp(event) {
     setTimeout(() => {
       window.location.href = 'index.html';
     }, 1500);
-  }
+  // No need to re-enable button here as we are redirecting away
 }
 
 function handleLogin(event) {
   event.preventDefault();
 
   const form = event.target;
+  const submitBtn = form.querySelector('.auth-form__submit-btn');
+  
+  // Disable button to prevent double-submit
+  if (submitBtn) submitBtn.disabled = true;
+
   const email = form.email.value.trim().toLowerCase();
   const password = form.password.value;
 
@@ -135,6 +149,12 @@ function handleLogin(event) {
 
   const users = getUsers();
   const user = users.find(user => user.email === email);
+
+  if (!isValid || !user || user.password !== password) {
+    if (submitBtn) submitBtn.disabled = false;
+  }
+
+  if (!isValid) return;
 
   if (!user || user.password !== password) {
     showError(form, 'login-email', '');
