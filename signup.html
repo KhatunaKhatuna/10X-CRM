@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign Up - 10X CRM</title>
 
-    <!-- CSS Stylesheets -->
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/auth.css" />
-
-    <!-- JS Theme Utility -->
+    <link rel="stylesheet" href="css/toast.css" />
+    
     <script src="js/theme.js" defer></script>
   </head>
   <body class="auth-page">
@@ -68,11 +67,12 @@
                 />
               </svg>
               <input
-                type="text"
+                type="email"
                 id="email"
                 name="email"
                 class="form-group__input"
                 placeholder="you@example.com"
+                autocomplete="username"
               />
             </div>
             <span class="form-group__error-message" id="email-error"></span>
@@ -131,6 +131,7 @@
                 name="password"
                 class="form-group__input"
                 placeholder="••••••••"
+                autocomplete="new-password"
               />
             </div>
             <span class="form-group__error-message" id="password-error"></span>
@@ -162,6 +163,7 @@
                 name="confirmPassword"
                 class="form-group__input"
                 placeholder="••••••••"
+                autocomplete="new-password"
               />
             </div>
             <span

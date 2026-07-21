@@ -38,8 +38,7 @@ function clearSession() {
 // --- CLIENTS ---
 function getClients() {
   const clientsJson = localStorage.getItem(STORAGE_KEYS.CLIENTS);
-  return clientsJson ? JSON.parse(clientsJson) : null; 
-  // Returning null instead of [] if not found so we know when to fetch from API
+  return clientsJson ? JSON.parse(clientsJson) : null;
 }
 
 function saveClients(clientsArray) {
@@ -52,7 +51,7 @@ function clearClients() {
 
 // --- THEME ---
 function getTheme() {
-  return localStorage.getItem(STORAGE_KEYS.THEME) || 'dark'; // default is dark
+  return localStorage.getItem(STORAGE_KEYS.THEME) || 'dark';
 }
 
 function saveTheme(themeName) {
