@@ -115,8 +115,7 @@ function handleSignUp(event) {
     // Redirect to login page
     setTimeout(() => {
       window.location.href = 'index.html';
-    }, 1500);
-  // No need to re-enable button here as we are redirecting away
+    }, 1500); 
 }
 
 function handleLogin(event) {

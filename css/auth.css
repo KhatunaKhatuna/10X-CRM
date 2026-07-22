@@ -39,9 +39,10 @@
   margin-bottom: 0.5rem;
   color: var(--text-primary);
 }
+
 .auth-card__text {
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: var(--text-muted);
   margin-bottom: 1rem;
 }
@@ -61,7 +62,7 @@
 }
 
 .form-group__label {
-  font-size: 0.875rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 0.125rem;
@@ -79,10 +80,10 @@
 .form-group__icon {
   position: absolute;
   left: 1rem;
-  width: 1.25rem;
-  height: 1.25rem;
-  color: var(--text-muted); 
-  pointer-events: none; 
+  width: 1.7rem;
+  height: 1.7rem;
+  color: var(--text-muted);
+  pointer-events: none;
   transition: color var(--transition-fast);
 }
 
@@ -91,8 +92,8 @@
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   color: var(--text-primary);
-  font-size: 0.95rem;
-  padding: 0.75rem 1rem 0.75rem 2.75rem;
+  font-size: 1.2rem;
+  padding: 0.75rem 1rem 0.75rem 3.2rem;
   width: 100%;
   transition:
     border-color var(--transition-fast),
@@ -122,7 +123,7 @@
 
 /* Error Message Span */
 .form-group__error-message {
-  font-size: 0.75rem;
+  font-size: 1.2rem;
   color: var(--color-error);
   min-height: 1.25rem;
   display: block;
@@ -135,7 +136,7 @@
   background-color: var(--accent-primary);
   color: #ffffff;
   border-radius: var(--radius-md);
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 600;
   padding: 0.875rem;
   text-align: center;
@@ -154,7 +155,7 @@
 
 /* Card Footer (Toggle Link) */
 .auth-card__footer {
-  font-size: 0.875rem;
+  font-size: 1.2rem;
   color: var(--text-secondary);
   text-align: center;
   margin-top: 1.5rem;
