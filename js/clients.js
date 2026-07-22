@@ -1,7 +1,16 @@
 /**
- * Clients Module Logic (P4)
- * Phase 2 will be implemented here (fetching data and storing it).
+ * Clients Module Logic
  */
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("Clients module loaded.");
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const container = document.getElementById("clients-grid");
+
+  container.innerHTML = '<p class="loading-text">Loading clients...</p>';
+
+  const { clients, error } = await initClientsData();
+
+  container.innerHTML = '';
+
+  // TODO (Phase 3): Render clients to the DOM
+  // renderClients(clients);
 });
