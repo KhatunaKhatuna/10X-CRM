@@ -26,6 +26,35 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Phase 3: Render clients to the DOM
   renderClients(clients);
+
+  // Phase 4: Modal UI Logic (Open / Close)
+  const btnAddClient = document.getElementById("btn-add-client");
+  const modal = document.getElementById("add-client-modal");
+  const btnCloseModal = document.getElementById("btn-close-modal");
+  const btnCancelModal = document.getElementById("btn-cancel-modal");
+
+  function openModal() {
+    modal.classList.add("modal--active");
+  }
+
+  function closeModal() {
+    modal.classList.remove("modal--active");
+    document.getElementById("add-client-form").reset();
+  }
+
+  btnAddClient.addEventListener("click", openModal);
+  btnCloseModal.addEventListener("click", closeModal);
+  btnCancelModal.addEventListener("click", (e) => {
+    e.preventDefault(); // prevent form submit just in case
+    closeModal();
+  });
+
+  // Close modal when clicking outside the content box
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
 });
 
 /**
@@ -52,7 +81,7 @@ function renderClients(clients) {
   container.innerHTML = "";
 
   if (!clients || clients.length === 0) {
-    container.innerHTML = '<p class="empty-state">No clients found. Add one!</p>';
+    container.innerHTML = '<p class="empty-state">No clients found.</p>';
     return;
   }
 

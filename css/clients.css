@@ -9,11 +9,13 @@
   margin-top: 2rem;
 }
 
-.loading-text, .error-state, .empty-state {
+.loading-text,
+.error-state,
+.empty-state {
   grid-column: 1 / -1;
   text-align: center;
   padding: 4rem;
-  background-color: var(--bg-surface);
+  background-color: var(--bg-card);
   border-radius: var(--radius-lg);
   border: 1px dashed var(--border-color);
 }
@@ -47,14 +49,15 @@
   box-shadow: 0 6px 8px -1px rgba(37, 99, 235, 0.3);
 }
 
-.loading-text, .empty-state {
+.loading-text,
+.empty-state {
   color: var(--text-muted);
   font-size: 1.6rem;
 }
 
 /* Client Card */
 .client-card {
-  background-color: var(--bg-surface);
+  background-color: var(--bg-card);
   border-radius: var(--radius-lg);
   padding: 2.4rem;
   border: 1px solid var(--border-color);
@@ -83,8 +86,8 @@
   height: 5.6rem;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid var(--bg-main);
-  background-color: var(--bg-main);
+  border: 2px solid var(--bg-primary);
+  background-color: var(--bg-primary);
 }
 
 .client-card__info {
@@ -176,7 +179,8 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-  opacity: 0; /* Hidden until hover for cleaner UI */
+  opacity: 0;
+  /* Hidden until hover for cleaner UI */
 }
 
 .client-card:hover .client-card__delete-btn {
@@ -191,4 +195,225 @@
 .client-card__delete-btn svg {
   width: 2rem;
   height: 2rem;
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal--active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal__content {
+  background-color: var(--bg-card);
+  /* solid background */
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 50rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+  transform: translateY(2rem) scale(0.95);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+}
+
+.modal--active .modal__content {
+  transform: translateY(0) scale(1);
+}
+
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 2.4rem;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+}
+
+.modal__title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.modal__close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.modal__close-btn:hover {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.modal__close-btn svg {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.modal__body {
+  padding: 1.8rem 2.4rem;
+}
+
+/* Forms */
+.form-group {
+  margin-bottom: 1.6rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 0.4rem;
+}
+
+.form-group__input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.form-group__icon {
+  position: absolute;
+  left: 1.2rem;
+  width: 2rem;
+  height: 2rem;
+  color: var(--text-muted);
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+.form-control {
+  width: 100%;
+  padding: 1rem 1.6rem 1rem 4rem;
+  /* added left padding for icon */
+  font-size: 1.4rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control--select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 3.6rem;
+  cursor: pointer;
+}
+
+.form-group__select-arrow {
+  position: absolute;
+  right: 1.6rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  color: var(--text-muted);
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+.form-group__input-wrapper:focus-within .form-group__select-arrow {
+  color: var(--accent-primary);
+}
+
+.form-group__input-wrapper:focus-within .form-group__icon {
+  color: var(--accent-primary);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.modal__footer {
+  padding: 1.6rem 2.4rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.2rem;
+  background-color: var(--bg-card);
+}
+
+.modal__footer .btn {
+  padding: 1rem 2rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.modal__footer .btn--secondary {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.modal__footer .btn--secondary:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--color-error);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.modal__footer .btn--primary {
+  background-color: var(--accent-primary);
+  color: white;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+}
+
+.modal__footer .btn--primary:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+/* Header Action Button */
+.btn-add-client {
+  display: flex;
+  align-items: center;
+  background-color: var(--accent-primary);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: var(--radius-md);
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+}
+
+.btn-add-client:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 8px -1px rgba(37, 99, 235, 0.3);
 }
