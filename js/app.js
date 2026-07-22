@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (profileTrigger && profileMenu) {
     profileTrigger.addEventListener("click", (e) => {
+
       profileMenu.classList.toggle("open");
     });
 
@@ -54,6 +55,15 @@ document.addEventListener("DOMContentLoaded", () => {
         profileAvatar.textContent = initials;
       }
     }
+  }
+
+  // 4. Logout Logic
+  const logoutBtn = document.getElementById("logout-btn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      clearSession();
+      window.location.replace("index.html");
+    });
   }
 });
 
