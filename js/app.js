@@ -16,8 +16,24 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+  // 2. Profile Dropdown Logic
+  const profileTrigger = document.getElementById("profile-trigger");
+  const profileMenu = document.querySelector(".profile-menu");
 
-  // 2. User Data Integration (Welcome text, avatar)
+  if (profileTrigger && profileMenu) {
+    profileTrigger.addEventListener("click", (e) => {
+      profileMenu.classList.toggle("open");
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", (e) => {
+      if (!profileMenu.contains(e.target)) {
+        profileMenu.classList.remove("open");
+      }
+    });
+  }
+
+  // 3. User Data Integration (Welcome text, avatar)
   const session = getSession();
   const users = getUsers();
 
