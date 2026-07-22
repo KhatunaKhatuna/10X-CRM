@@ -8,7 +8,8 @@ const STORAGE_KEYS = {
   USERS: 'crm_users',
   SESSION: 'crm_session',
   CLIENTS: 'crm_clients',
-  THEME: 'crm_theme'
+  THEME: 'crm_theme',
+  SIDEBAR: 'crm_sidebar_collapsed'
 };
 
 // --- USERS ---
@@ -56,4 +57,13 @@ function getTheme() {
 
 function saveTheme(themeName) {
   localStorage.setItem(STORAGE_KEYS.THEME, themeName);
+}
+
+// --- SIDEBAR ---
+function getSidebarState() {
+  return localStorage.getItem(STORAGE_KEYS.SIDEBAR) === "true";
+}
+
+function saveSidebarState(isCollapsed) {
+  localStorage.setItem(STORAGE_KEYS.SIDEBAR, isCollapsed ? "true" : "false");
 }
