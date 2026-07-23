@@ -24,10 +24,46 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // Render clients to the DOM
+  // Render initial clients to the DOM
   renderClients(clients);
 
-  // Client Delete Logic (Event Delegation)
+  /**
+   * Toolbar State & Logic
+   */
+  let searchQuery = '';
+
+  function applyFiltersAndRender() {
+    let filteredClients = getClients() || [];
+
+    // 1. Apply Search
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filteredClients = filteredClients.filter(client =>
+        client.name.toLowerCase().includes(query) ||
+        client.company.toLowerCase().includes(query)
+      );
+    }
+
+    renderClients(filteredClients);
+  }
+
+  // Search Logic (with Debouncing)
+  const searchInput = document.getElementById("search-input");
+  let searchTimeout;
+
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        searchQuery = e.target.value.trim();
+        applyFiltersAndRender();
+      }, 1000);
+    });
+  }
+
+  /**
+   * Client Delete Logic (Event Delegation)
+   */
   container.addEventListener("click", async (e) => {
     const deleteBtn = e.target.closest('.client-card__delete-btn');
     if (deleteBtn) {
@@ -37,7 +73,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         deleteBtn.disabled = true;
         const result = await deleteClient(id);
         if (result.success) {
-          renderClients(getClients());
+          applyFiltersAndRender();
           showToast('Client deleted', 'success');
         } else {
           deleteBtn.disabled = false;
@@ -47,7 +83,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // Client Status Change Logic (Event Delegation)
+
+  /**
+   * Client Status Change Logic (Event Delegation)
+   */
   container.addEventListener("change", (e) => {
     if (e.target.classList.contains('client-card__status')) {
       const id = e.target.getAttribute('data-id');
@@ -59,13 +98,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (clientIndex !== -1) {
         currentClients[clientIndex].status = newStatus;
         saveClients(currentClients);
-        renderClients(currentClients);
+        applyFiltersAndRender();
         showToast('Status updated', 'success');
       }
     }
   });
 
-  // Modal UI Logic (Open / Close)
+  /**
+   * Modal UI Logic (Open / Close)
+   */
   const btnAddClient = document.getElementById("btn-add-client");
   const modal = document.getElementById("add-client-modal");
   const btnCloseModal = document.getElementById("btn-close-modal");
@@ -96,7 +137,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // Form Validation and Submission
+  /**
+    * Form Validation and Submission
+   */
   const addClientForm = document.getElementById("add-client-form");
   const btnSaveClient = document.getElementById("btn-save-client");
 
@@ -174,7 +217,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (result.success) {
       closeModal();
-      renderClients(getClients()); // Refresh the UI instantly
+      applyFiltersAndRender(); // Refresh the UI instantly
       showToast('Client added', 'success');
     } else {
       // General error fallback using PRD-compliant toast notification
