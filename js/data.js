@@ -104,3 +104,30 @@ async function addClientData(clientData) {
     return { success: false, error: "Could not add client. Please try again." };
   }
 }
+
+/**
+ * Deletes a client via API and updates local storage.
+ * @param {string|number} id - The ID of the client to delete.
+ * @returns {Promise<{success: boolean, error: string|null}>}
+ */
+async function deleteClient(id) {
+  try {
+    const response = await fetch(`https://dummyjson.com/users/${id}`, {
+      method: 'DELETE',
+    });
+
+    // Simulated clients might return 404, which is expected.
+    if (!response.ok && response.status !== 404) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    let currentClients = getClients() || [];
+    currentClients = currentClients.filter(client => String(client.id) !== String(id));
+    saveClients(currentClients);
+
+    return { success: true, error: null };
+  } catch (error) {
+    console.error("Failed to delete client:", error.message);
+    return { success: false, error: "Could not delete client. Please try again." };
+  }
+}

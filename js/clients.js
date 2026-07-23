@@ -27,6 +27,26 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Render clients to the DOM
   renderClients(clients);
 
+  // Client Delete Logic (Event Delegation)
+  container.addEventListener("click", async (e) => {
+    const deleteBtn = e.target.closest('.client-card__delete-btn');
+    if (deleteBtn) {
+      if (deleteBtn.disabled) return;
+      const id = deleteBtn.getAttribute('data-id');
+      if (confirm("Delete this client? This cannot be undone.")) {
+        deleteBtn.disabled = true;
+        const result = await deleteClient(id);
+        if (result.success) {
+          renderClients(getClients());
+          showToast('Client deleted', 'success');
+        } else {
+          deleteBtn.disabled = false;
+          showToast(result.error, 'error');
+        }
+      }
+    }
+  });
+
   // Modal UI Logic (Open / Close)
   const btnAddClient = document.getElementById("btn-add-client");
   const modal = document.getElementById("add-client-modal");
