@@ -471,6 +471,7 @@
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+
   padding-right: 3.6rem;
   cursor: pointer;
 }
@@ -576,4 +577,207 @@
   background-color: var(--accent-hover);
   transform: translateY(-1px);
   box-shadow: 0 6px 8px -1px rgba(37, 99, 235, 0.3);
+}
+
+/* Client Details Modal */
+.modal__content--large {
+  max-width: 80rem;
+}
+
+.details-modal-body {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 3.2rem;
+  padding: 2.4rem;
+  min-height: 50rem;
+}
+
+/* Left Column: Details */
+.details-section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.details-profile {
+  display: flex;
+  gap: 1.6rem;
+}
+
+.details-avatar {
+  width: 6.4rem;
+  height: 6.4rem;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: var(--shadow-sm);
+}
+
+.details-name {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+}
+
+.details-date {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+}
+
+.details-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  background-color: var(--bg-body);
+  padding: 1.6rem;
+  border-radius: var(--radius-md);
+  border-top: 1px solid var(--border-color);
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.detail-label {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.detail-value {
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.detail-value.status-badge {
+  display: inline-block;
+  padding: 0.4rem 1.2rem;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: max-content;
+}
+
+.details-actions {
+  margin-top: auto;
+}
+
+.btn-remind {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1.2rem;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(37, 99, 235, 0.1) 100%);
+  color: var(--accent-primary);
+  border: 1px dashed rgba(37, 99, 235, 0.4);
+  border-radius: var(--radius-md);
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-remind:hover {
+  background: rgba(37, 99, 235, 0.15);
+  border-style: solid;
+  transform: translateY(-1px);
+}
+
+.btn-add-note {
+  align-self: flex-end;
+  padding: 1.2rem 2.4rem;
+  background-color: var(--accent-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+}
+
+.btn-add-note:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 8px -1px rgba(37, 99, 235, 0.3);
+}
+
+/* Right Column: Notes */
+.notes-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  height: 100%;
+}
+
+.notes-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  height: 6.4rem;
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.notes-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding-right: 0.8rem;
+}
+
+.note-item {
+  background-color: var(--bg-body);
+  padding: 1.2rem 1.6rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.note-date {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+  display: block;
+}
+
+.note-text {
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.add-note-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 1.6rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.add-note-input {
+  resize: vertical;
+  min-height: 8rem;
+}
+
+@media (max-width: 768px) {
+  .details-modal-body {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .notes-section {
+    height: 40rem;
+  }
 }

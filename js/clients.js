@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   renderClients(clients);
 
   /**
-   * Toolbar State & Logic
+   * Toolbar search,filter and sort State & Logic
    */
   let searchQuery = '';
   let filterStatus = 'All';
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     filteredClients.sort((a, b) => {
       switch (sortOption) {
         case 'newest':
-          return b.id - a.id; // Assuming id is timestamp-based
+          return new Date(b.createdAt) - new Date(a.createdAt);
         case 'deal-desc':
           return b.dealValue - a.dealValue;
         case 'deal-asc':
@@ -239,7 +239,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     if (phone && !isValidPhone(phone)) {
-      showFieldError("client-phone", "Please enter a valid phone number (digits, spaces, or dashes)");
+      showFieldError("client-phone", "Phone number looks too short");
       isValid = false;
     }
 
