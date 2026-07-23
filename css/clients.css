@@ -322,6 +322,10 @@
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+.input-error {
+  border-color: var(--color-error) !important;
+}
+
 .form-control--select {
   appearance: none;
   -webkit-appearance: none;
