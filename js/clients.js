@@ -47,6 +47,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+  // Client Status Change Logic (Event Delegation)
+  container.addEventListener("change", (e) => {
+    if (e.target.classList.contains('client-card__status')) {
+      const id = e.target.getAttribute('data-id');
+      const newStatus = e.target.value;
+
+      let currentClients = getClients() || [];
+      const clientIndex = currentClients.findIndex(c => String(c.id) === String(id));
+
+      if (clientIndex !== -1) {
+        currentClients[clientIndex].status = newStatus;
+        saveClients(currentClients);
+        renderClients(currentClients);
+        showToast('Status updated', 'success');
+      }
+    }
+  });
+
   // Modal UI Logic (Open / Close)
   const btnAddClient = document.getElementById("btn-add-client");
   const modal = document.getElementById("add-client-modal");
@@ -206,7 +224,12 @@ function renderClients(clients) {
           </p>
         </div>
         <div class="client-card__footer">
-          <span class="client-card__status client-card__status--${client.status.toLowerCase()}">${client.status}</span>
+          <select class="client-card__status client-card__status--${client.status.toLowerCase()}" data-id="${client.id}">
+            <option value="Lead" ${client.status === 'Lead' ? 'selected' : ''}>Lead</option>
+            <option value="Contacted" ${client.status === 'Contacted' ? 'selected' : ''}>Contacted</option>
+            <option value="Won" ${client.status === 'Won' ? 'selected' : ''}>Won</option>
+            <option value="Lost" ${client.status === 'Lost' ? 'selected' : ''}>Lost</option>
+          </select>
           <span class="client-card__deal">$${client.dealValue.toLocaleString()}</span>
         </div>
         <button class="client-card__delete-btn" data-id="${client.id}" title="Delete Client">

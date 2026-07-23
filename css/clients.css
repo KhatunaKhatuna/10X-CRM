@@ -151,11 +151,38 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  outline: none;
+  text-align: center;
+}
+
+.client-card__status:hover {
+  filter: brightness(0.95);
 }
 
 .client-card__status--lead {
   background-color: rgba(37, 99, 235, 0.1);
-  color: var(--accent-primary);
+  color: var(--accent-primary, #2563eb);
+}
+
+.client-card__status--contacted {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: #d97706;
+}
+
+.client-card__status--won {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #059669;
+}
+
+.client-card__status--lost {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
 }
 
 .client-card__deal {
