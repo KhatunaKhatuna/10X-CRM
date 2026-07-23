@@ -39,6 +39,11 @@ function isValidEmail(email) {
   return pattern.test(email);
 }
 
+function isValidPhone(phone) {
+  const pattern = /^\+?[0-9\s\-]{7,20}$/;
+  return pattern.test(phone);
+}
+
 function isValidPassword(password) {
   const hasLetter = /[a-zA-Z]/.test(password);
   const hasNumber = /[0-9]/.test(password);

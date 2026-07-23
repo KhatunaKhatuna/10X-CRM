@@ -9,6 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
   if (signupForm) {
     signupForm.addEventListener('submit', handleSignUp);
     attachDynamicErrorClearing(signupForm);
+
+    // Live filter for name input (allow only letters, spaces, hyphens, apostrophes)
+    if (signupForm.fullName) {
+      signupForm.fullName.addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/[^\p{L}\s\-']/gu, '');
+      });
+    }
   }
 
   if (loginForm) {

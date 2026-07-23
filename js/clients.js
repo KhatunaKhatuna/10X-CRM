@@ -103,6 +103,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Attach dynamic error clearing to this form
   attachDynamicErrorClearing(addClientForm);
 
+  // Live filter for phone input (prevent letters/symbols)
+  addClientForm.phone.addEventListener('input', (e) => {
+    e.target.value = e.target.value.replace(/[^\d\s\-+]/g, '');
+  });
+
+  // Live filter for name input (allow only letters, spaces, hyphens, apostrophes)
+  addClientForm.name.addEventListener('input', (e) => {
+    // \p{L} matches any kind of letter from any language
+    e.target.value = e.target.value.replace(/[^\p{L}\s\-']/gu, '');
+  });
+
   addClientForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     clearFieldErrors(addClientForm);
@@ -134,8 +145,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
 
-    if (phone && phone.length < 6) {
-      showFieldError("client-phone", "Phone number looks too short");
+    if (phone && !isValidPhone(phone)) {
+      showFieldError("client-phone", "Please enter a valid phone number (digits, spaces, or dashes)");
       isValid = false;
     }
 
