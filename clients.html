@@ -170,7 +170,7 @@
 
       <!-- Page Content -->
       <main class="page-content">
-        <div class="dashboard-header" style="display: flex; align-items: center; gap: 1.6rem;">
+        <div class="dashboard-header" style="display: flex; align-items: center; justify-content: space-between; gap: 1.6rem;">
           <h1 class="dashboard-header__title">Clients</h1>
           <button id="btn-add-client" class="btn-add-client">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 1.8rem; height: 1.8rem; margin-right: 0.5rem; display: inline-block; vertical-align: middle;">
@@ -178,6 +178,39 @@
             </svg>
             Add Client
           </button>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+          <div class="toolbar__search">
+            <svg class="toolbar__search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            </svg>
+            <input type="text" id="search-input" placeholder="Search clients..." class="toolbar__input" />
+          </div>
+          
+          <div class="toolbar__filters" id="status-filters">
+            <button class="filter-chip filter-chip--active" data-status="All">All</button>
+            <button class="filter-chip" data-status="Lead">Lead</button>
+            <button class="filter-chip" data-status="Contacted">Contacted</button>
+            <button class="filter-chip" data-status="Won">Won</button>
+            <button class="filter-chip" data-status="Lost">Lost</button>
+          </div>
+          
+          <div class="toolbar__sort">
+            <div class="toolbar__select-wrapper">
+              <select id="sort-select" class="toolbar__select">
+                <option value="newest">Newest First</option>
+                <option value="deal-desc">Deal: High-Low</option>
+                <option value="deal-asc">Deal: Low-High</option>
+                <option value="name-asc">Name: A-Z</option>
+                <option value="name-desc">Name: Z-A</option>
+              </select>
+              <svg class="toolbar__select-arrow" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+              </svg>
+            </div>
+          </div>
         </div>
 
         <!-- Container for Client Cards -->
