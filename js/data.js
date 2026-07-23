@@ -51,3 +51,56 @@ async function initClientsData() {
     return { clients, error: null };
   }
 }
+
+/**
+ * Adds a new client via API and updates local storage.
+ * @param {Object} clientData - The raw client data from the form.
+ * @returns {Promise<{success: boolean, error: string|null}>}
+ */
+async function addClientData(clientData) {
+  try {
+    // 1. Send POST request to DummyJSON API
+    const response = await fetch('https://dummyjson.com/users/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        firstName: clientData.name.split(' ')[0],
+        lastName: clientData.name.split(' ').slice(1).join(' ') || '',
+        email: clientData.email,
+        phone: clientData.phone,
+        company: { name: clientData.company },
+        dealValue: Number(clientData.dealValue),
+        status: clientData.status
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const apiResult = await response.json();
+
+    const newClient = {
+      id: apiResult.id || Date.now(),
+      name: clientData.name,
+      email: clientData.email,
+      phone: clientData.phone || "N/A",
+      company: clientData.company || "Independent",
+      image: null,
+      status: clientData.status || "Lead",
+      dealValue: Number(clientData.dealValue) || 0,
+      notes: [],
+      createdAt: new Date().toISOString()
+    };
+
+    //Add to local storage array at the top
+    let currentClients = getClients() || [];
+    currentClients.unshift(newClient);
+    saveClients(currentClients);
+
+    return { success: true, error: null };
+  } catch (error) {
+    console.error("Failed to add client:", error.message);
+    return { success: false, error: "Could not add client. Please try again." };
+  }
+}

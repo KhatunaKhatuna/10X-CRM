@@ -310,7 +310,7 @@
   transition: color 0.2s ease;
 }
 
-.form-control {
+.form-group__input {
   width: 100%;
   padding: 1rem 1.6rem 1rem 4rem;
   /* added left padding for icon */
@@ -326,7 +326,7 @@
   border-color: var(--color-error) !important;
 }
 
-.form-control--select {
+.form-group__input--select {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -352,7 +352,7 @@
   color: var(--accent-primary);
 }
 
-.form-control:focus {
+.form-group__input:focus {
   outline: none;
   border-color: var(--accent-primary);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);

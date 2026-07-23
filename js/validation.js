@@ -24,7 +24,7 @@ function showFieldError(inputId, message) {
  */
 function clearFieldErrors(form) {
   if (!form) return;
-  form.querySelectorAll('.form-group__input, .form-control').forEach(input => {
+  form.querySelectorAll('.form-group__input').forEach(input => {
     input.classList.remove('input-error');
   });
   form.querySelectorAll('.form-group__error-message').forEach(span => {
@@ -57,7 +57,7 @@ function isValidDealValue(value) {
  */
 function attachDynamicErrorClearing(form) {
   if (!form) return;
-  const inputs = form.querySelectorAll('.form-group__input, .form-control');
+  const inputs = form.querySelectorAll('.form-group__input');
   inputs.forEach(input => {
     input.addEventListener('input', function() {
       this.classList.remove('input-error');

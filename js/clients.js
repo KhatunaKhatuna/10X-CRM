@@ -24,10 +24,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // Phase 3: Render clients to the DOM
+  // Render clients to the DOM
   renderClients(clients);
 
-  // Phase 4: Modal UI Logic (Open / Close)
+  // Modal UI Logic (Open / Close)
   const btnAddClient = document.getElementById("btn-add-client");
   const modal = document.getElementById("add-client-modal");
   const btnCloseModal = document.getElementById("btn-close-modal");
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   btnAddClient.addEventListener("click", openModal);
   btnCloseModal.addEventListener("click", closeModal);
   btnCancelModal.addEventListener("click", (e) => {
-    e.preventDefault(); // prevent form submit just in case
+    e.preventDefault();
     closeModal();
   });
 
@@ -54,6 +54,84 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (e.target === modal) {
       closeModal();
     }
+  });
+
+  // Form Validation and Submission
+  const addClientForm = document.getElementById("add-client-form");
+  const btnSaveClient = document.getElementById("btn-save-client");
+
+  // Attach dynamic error clearing to this form
+  attachDynamicErrorClearing(addClientForm);
+
+  addClientForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    clearFieldErrors(addClientForm);
+
+    if (btnSaveClient.disabled) return;
+
+    const name = addClientForm.name.value.trim();
+    const company = addClientForm.company.value.trim();
+    const email = addClientForm.email.value.trim().toLowerCase();
+    const phone = addClientForm.phone.value.trim();
+    const dealValue = addClientForm.dealValue.value.trim();
+    const status = addClientForm.status.value;
+
+    let isValid = true;
+
+    if (!name || name.length < 3) {
+      showFieldError("client-name", "Name must be at least 3 characters");
+      isValid = false;
+    }
+
+    if (!email || !isValidEmail(email)) {
+      showFieldError("client-email", "Please enter a valid email address");
+      isValid = false;
+    } else {
+      const emailExists = getClients().some(c => c.email.toLowerCase() === email);
+      if (emailExists) {
+        showFieldError("client-email", "A client with this email already exists");
+        isValid = false;
+      }
+    }
+
+    if (phone && phone.length < 6) {
+      showFieldError("client-phone", "Phone number looks too short");
+      isValid = false;
+    }
+
+    if (!isValidDealValue(dealValue)) {
+      showFieldError("client-deal-value", "Deal value must be a number greater than 0");
+      isValid = false;
+    }
+
+    if (!isValid) return;
+
+    const clientData = {
+      name,
+      company,
+      email,
+      phone,
+      dealValue,
+      status
+    };
+
+    const originalText = btnSaveClient.textContent;
+    btnSaveClient.textContent = "Saving...";
+    btnSaveClient.disabled = true;
+
+    const result = await addClientData(clientData);
+
+    if (result.success) {
+      closeModal();
+      renderClients(getClients()); // Refresh the UI instantly
+      showToast('Client added', 'success');
+    } else {
+      // General error fallback using PRD-compliant toast notification
+      showToast(result.error, 'error');
+    }
+
+    btnSaveClient.textContent = originalText;
+    btnSaveClient.disabled = false;
   });
 });
 
@@ -104,7 +182,7 @@ function renderClients(clients) {
           </p>
           <p class="client-card__detail">
             <svg class="client-card__icon" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-2.896-1.596-5.48-4.18-7.076-7.076l1.293-.97c.362-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" /></svg>
-            ${escapeHTML(client.phone || "N/A")}
+            ${escapeHTML(client.phone || " ")}
           </p>
         </div>
         <div class="client-card__footer">
