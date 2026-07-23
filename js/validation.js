@@ -29,7 +29,6 @@ function clearFieldErrors(form) {
   });
   form.querySelectorAll('.form-group__error-message').forEach(span => {
     span.textContent = '';
-    span.style.display = 'none';
   });
 }
 
@@ -59,12 +58,11 @@ function attachDynamicErrorClearing(form) {
   if (!form) return;
   const inputs = form.querySelectorAll('.form-group__input');
   inputs.forEach(input => {
-    input.addEventListener('input', function() {
+    input.addEventListener('input', function () {
       this.classList.remove('input-error');
       const errorSpan = document.getElementById(`${this.id}-error`);
       if (errorSpan) {
         errorSpan.textContent = '';
-        errorSpan.style.display = 'none';
       }
     });
   });

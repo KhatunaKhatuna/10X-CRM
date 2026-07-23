@@ -77,7 +77,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function closeModal() {
     modal.classList.remove("modal--active");
-    document.getElementById("add-client-form").reset();
+    const form = document.getElementById("add-client-form");
+    form.reset();
+    clearFieldErrors(form);
   }
 
   btnAddClient.addEventListener("click", openModal);

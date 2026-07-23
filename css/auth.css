@@ -123,12 +123,14 @@
 
 /* Error Message Span */
 .form-group__error-message {
-  font-size: 1.2rem;
+  font-size: 1rem;
+  line-height: 1.5;
   color: var(--color-error);
-  min-height: 1.25rem;
+  height: 1.5rem;
   display: block;
   font-weight: 500;
   margin-top: 0.25rem;
+  white-space: nowrap;
 }
 
 /* Submit Button */

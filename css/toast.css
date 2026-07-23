@@ -11,15 +11,21 @@
 
 /* Individual Toast */
 .toast {
-  padding: 1rem 1.5rem;
+  padding: 1.2rem 1.5rem;
   border-radius: var(--radius-md);
   color: #fff;
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 1.2rem;
   box-shadow: var(--shadow-lg);
   opacity: 0;
   transform: translateY(-20px);
   animation: slideIn 0.3s forwards, fadeOut 0.3s forwards 2.7s;
+  min-width: 28rem;
+  min-height: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 /* Success Type */

@@ -12,10 +12,22 @@
   --accent-hover: #1d4ed8;
   --accent-light: #eff6ff;
 
-  /* Status Colors */
+  /* Status Colors (General) */
   --color-success: #10b981;
   --color-error: #ef4444;
+  --color-error-bg: rgba(239, 68, 68, 0.1);
+  --color-error-border: rgba(239, 68, 68, 0.3);
   --color-warning: #f59e0b;
+
+  /* Client Status Badge Colors */
+  --status-lead-bg: rgba(37, 99, 235, 0.1);
+  --status-lead-text: #2563eb;
+  --status-contacted-bg: rgba(245, 158, 11, 0.1);
+  --status-contacted-text: #d97706;
+  --status-won-bg: rgba(16, 185, 129, 0.1);
+  --status-won-text: #059669;
+  --status-lost-bg: rgba(239, 68, 68, 0.1);
+  --status-lost-text: #dc2626;
 
   /* Borders and Dividers */
   --border-color: #e2e8f0;
