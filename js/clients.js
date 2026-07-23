@@ -155,6 +155,72 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   /**
+   * Client Details Modal Logic
+   */
+  const detailsModal = document.getElementById("client-details-modal");
+  const btnCloseDetailsModal = document.getElementById("btn-close-details-modal");
+  const detailsAvatar = document.getElementById("details-avatar");
+  const detailsName = document.getElementById("details-name");
+  const detailsDate = document.getElementById("details-date");
+  const detailsCompany = document.getElementById("details-company");
+  const detailsEmail = document.getElementById("details-email");
+  const detailsPhone = document.getElementById("details-phone");
+  const detailsDeal = document.getElementById("details-deal");
+  const detailsStatus = document.getElementById("details-status");
+
+  let currentDetailClientId = null;
+
+  function openDetailsModal(clientId) {
+    const clients = getClients() || [];
+    const client = clients.find(c => String(c.id) === String(clientId));
+    if (!client) return;
+
+    currentDetailClientId = clientId;
+
+    const avatarSrc = client.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(client.name)}&background=random`;
+    detailsAvatar.src = avatarSrc;
+    detailsName.textContent = client.name;
+
+    const dateObj = new Date(client.createdAt);
+    detailsDate.textContent = `Client since ${dateObj.toLocaleDateString()}`;
+
+    detailsCompany.textContent = client.company || "N/A";
+    detailsEmail.textContent = client.email || "N/A";
+    detailsPhone.textContent = client.phone || "N/A";
+    detailsDeal.textContent = `$${(Number(client.dealValue) || 0).toLocaleString()}`;
+
+    detailsStatus.textContent = client.status;
+    detailsStatus.className = `detail-value status-badge client-card__status--${client.status.toLowerCase()}`;
+
+    // Render notes (stub for now)
+    // renderNotes();
+
+    detailsModal.classList.add("modal--active");
+  }
+
+  function closeDetailsModal() {
+    detailsModal.classList.remove("modal--active");
+    currentDetailClientId = null;
+  }
+
+  btnCloseDetailsModal.addEventListener("click", closeDetailsModal);
+
+  detailsModal.addEventListener("click", (e) => {
+    if (e.target === detailsModal) {
+      closeDetailsModal();
+    }
+  });
+
+  // Open Details Modal on Card Click
+  container.addEventListener("click", (e) => {
+    const card = e.target.closest('.client-card');
+    if (card && !e.target.closest('.client-card__status') && !e.target.closest('.client-card__delete-btn')) {
+      const id = card.getAttribute('data-id');
+      openDetailsModal(id);
+    }
+  });
+
+  /**
    * Modal UI Logic (Open / Close)
    */
   const btnAddClient = document.getElementById("btn-add-client");
@@ -311,7 +377,7 @@ function renderClients(clients) {
     const avatarSrc = client.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(client.name)}&background=random`;
 
     return `
-      <div class="client-card">
+      <div class="client-card" data-id="${client.id}">
         <div class="client-card__header">
           <img src="${escapeHTML(avatarSrc)}" alt="${escapeHTML(client.name)}" class="client-card__avatar" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(client.name)}&background=random'" />
           <div class="client-card__info">
