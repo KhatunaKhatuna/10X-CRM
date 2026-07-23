@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
    */
   let searchQuery = '';
   let filterStatus = 'All';
+  let sortOption = 'newest';
 
   function applyFiltersAndRender() {
     let filteredClients = getClients() || [];
@@ -49,6 +50,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (filterStatus !== 'All') {
       filteredClients = filteredClients.filter(client => client.status === filterStatus);
     }
+
+    // 3. Apply Sorting
+    filteredClients.sort((a, b) => {
+      switch (sortOption) {
+        case 'newest':
+          return b.id - a.id; // Assuming id is timestamp-based
+        case 'deal-desc':
+          return b.dealValue - a.dealValue;
+        case 'deal-asc':
+          return a.dealValue - b.dealValue;
+        case 'name-asc':
+          return a.name.localeCompare(b.name);
+        case 'name-desc':
+          return b.name.localeCompare(a.name);
+        default:
+          return 0;
+      }
+    });
 
     renderClients(filteredClients);
   }
@@ -75,11 +94,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Update UI (active class)
         statusFilters.querySelectorAll(".filter-chip").forEach(chip => chip.classList.remove("filter-chip--active"));
         e.target.classList.add("filter-chip--active");
-        
+
         // Update state and re-render
         filterStatus = e.target.getAttribute("data-status");
         applyFiltersAndRender();
       }
+    });
+  }
+
+  // Sort Logic (Select Dropdown)
+  const sortSelect = document.getElementById("sort-select");
+  if (sortSelect) {
+    sortSelect.addEventListener("change", (e) => {
+      sortOption = e.target.value;
+      applyFiltersAndRender();
     });
   }
 
