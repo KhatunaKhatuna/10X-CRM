@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
    * Toolbar State & Logic
    */
   let searchQuery = '';
+  let filterStatus = 'All';
 
   function applyFiltersAndRender() {
     let filteredClients = getClients() || [];
@@ -42,6 +43,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         client.name.toLowerCase().includes(query) ||
         client.company.toLowerCase().includes(query)
       );
+    }
+
+    // 2. Apply Status Filter
+    if (filterStatus !== 'All') {
+      filteredClients = filteredClients.filter(client => client.status === filterStatus);
     }
 
     renderClients(filteredClients);
@@ -57,7 +63,23 @@ document.addEventListener("DOMContentLoaded", async () => {
       searchTimeout = setTimeout(() => {
         searchQuery = e.target.value.trim();
         applyFiltersAndRender();
-      }, 1000);
+      }, 300);
+    });
+  }
+
+  // Filter Logic (Status Chips)
+  const statusFilters = document.getElementById("status-filters");
+  if (statusFilters) {
+    statusFilters.addEventListener("click", (e) => {
+      if (e.target.classList.contains("filter-chip")) {
+        // Update UI (active class)
+        statusFilters.querySelectorAll(".filter-chip").forEach(chip => chip.classList.remove("filter-chip--active"));
+        e.target.classList.add("filter-chip--active");
+        
+        // Update state and re-render
+        filterStatus = e.target.getAttribute("data-status");
+        applyFiltersAndRender();
+      }
     });
   }
 
