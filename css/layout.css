@@ -5,11 +5,20 @@
   background-color: var(--bg-primary);
   height: 100vh;
   overflow: hidden;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
 }
 
 .app-layout {
   display: flex;
   height: 100vh;
+}
+
+/* Theme Transition Helper (applied temporarily via JS) */
+.theme-transition,
+.theme-transition *,
+.theme-transition *:before,
+.theme-transition *:after {
+  transition: background-color var(--transition-normal), color var(--transition-normal), border-color var(--transition-normal), fill var(--transition-normal), stroke var(--transition-normal) !important;
 }
 
 /* Sidebar */

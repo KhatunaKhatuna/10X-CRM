@@ -42,6 +42,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Toggle event
     themeToggle.addEventListener("click", () => {
+      // Temporarily add a global transition class
+      document.body.classList.add("theme-transition");
+
       const isCurrentlyDark = document.documentElement.classList.contains("dark-theme");
       if (isCurrentlyDark) {
         document.documentElement.classList.remove("dark-theme");
@@ -52,6 +55,11 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("crm_theme", "dark");
         updateThemeUI(true);
       }
+
+      // Remove the global transition class after animation completes (300ms)
+      setTimeout(() => {
+        document.body.classList.remove("theme-transition");
+      }, 300);
     });
   }
 
