@@ -168,7 +168,66 @@ document.addEventListener("DOMContentLoaded", async () => {
   const detailsDeal = document.getElementById("details-deal");
   const detailsStatus = document.getElementById("details-status");
 
+  const notesList = document.getElementById("notes-list");
+  const addNoteForm = document.getElementById("add-note-form");
+  const noteInput = document.getElementById("note-input");
+
   let currentDetailClientId = null;
+
+  function renderNotes(clientId) {
+    const clients = getClients() || [];
+    const client = clients.find(c => String(c.id) === String(clientId));
+    const notes = (client && client.notes) ? client.notes : [];
+
+    notesList.innerHTML = "";
+
+    if (notes.length === 0) {
+      notesList.innerHTML = '<p class="empty-state" style="padding: 1.6rem; text-align: center;">No notes yet. Add one below!</p>';
+      return;
+    }
+
+    // Sort notes descending (newest first)
+    notes.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    const notesHTML = notes.map(note => {
+      const dateObj = new Date(note.date);
+      return `
+        <div class="note-item">
+          <span class="note-date">${dateObj.toLocaleString()}</span>
+          <p class="note-text">${escapeHTML(note.text)}</p>
+        </div>
+      `;
+    }).join("");
+
+    notesList.innerHTML = notesHTML;
+  }
+
+  // Add Note Form Submit
+  addNoteForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!currentDetailClientId) return;
+
+    const text = noteInput.value.trim();
+    if (!text) return;
+
+    const clients = getClients() || [];
+    const clientIndex = clients.findIndex(c => String(c.id) === String(currentDetailClientId));
+
+    if (clientIndex !== -1) {
+      if (!clients[clientIndex].notes) {
+        clients[clientIndex].notes = [];
+      }
+      clients[clientIndex].notes.push({
+        text: text,
+        date: new Date().toISOString()
+      });
+      saveClients(clients);
+      renderNotes(currentDetailClientId);
+      noteInput.value = "";
+      showToast('Note added successfully', 'success');
+    }
+  });
+
 
   function openDetailsModal(clientId) {
     const clients = getClients() || [];
@@ -192,11 +251,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     detailsStatus.textContent = client.status;
     detailsStatus.className = `detail-value status-badge client-card__status--${client.status.toLowerCase()}`;
 
-    // Render notes (stub for now)
-    // renderNotes();
+
+    // Clear note input
+    noteInput.value = "";
+
+    renderNotes(clientId);
 
     detailsModal.classList.add("modal--active");
   }
+
 
   function closeDetailsModal() {
     detailsModal.classList.remove("modal--active");
@@ -221,35 +284,35 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   /**
-   * Modal UI Logic (Open / Close)
+   * Add Client Modal UI Logic (Open / Close)
    */
   const btnAddClient = document.getElementById("btn-add-client");
-  const modal = document.getElementById("add-client-modal");
-  const btnCloseModal = document.getElementById("btn-close-modal");
-  const btnCancelModal = document.getElementById("btn-cancel-modal");
+  const clientModal = document.getElementById("add-client-modal");
+  const btnCloseClientModal = document.getElementById("btn-close-modal");
+  const btnCancelClientModal = document.getElementById("btn-cancel-modal");
 
-  function openModal() {
-    modal.classList.add("modal--active");
+  function openClientModal() {
+    clientModal.classList.add("modal--active");
   }
 
-  function closeModal() {
-    modal.classList.remove("modal--active");
+  function closeClientModal() {
+    clientModal.classList.remove("modal--active");
     const form = document.getElementById("add-client-form");
     form.reset();
     clearFieldErrors(form);
   }
 
-  btnAddClient.addEventListener("click", openModal);
-  btnCloseModal.addEventListener("click", closeModal);
-  btnCancelModal.addEventListener("click", (e) => {
+  btnAddClient.addEventListener("click", openClientModal);
+  btnCloseClientModal.addEventListener("click", closeClientModal);
+  btnCancelClientModal.addEventListener("click", (e) => {
     e.preventDefault();
-    closeModal();
+    closeClientModal();
   });
 
   // Close modal when clicking outside the content box
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      closeModal();
+  clientModal.addEventListener("click", (e) => {
+    if (e.target === clientModal) {
+      closeClientModal();
     }
   });
 
