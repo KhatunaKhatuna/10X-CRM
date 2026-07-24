@@ -35,7 +35,8 @@ function clearFieldErrors(form) {
 // --- Pure Validation Helpers ---
 
 function isValidEmail(email) {
-  const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  // Strict pattern allowing only Latin letters, numbers, and standard email symbols
+  const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return pattern.test(email);
 }
 
