@@ -10,10 +10,12 @@
   <link rel="stylesheet" href="css/variables.css" />
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/toast.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
 
   <script src="js/storage.js"></script>
   <script src="js/guard.js"></script>
   <script src="js/theme.js"></script>
+  <script src="js/data.js"></script>
 </head>
 
 <body class="app-body">
@@ -101,15 +103,8 @@
                   <feGaussianBlur stdDeviation="1" result="blur" />
                   <feComposite in="SourceGraphic" in2="blur" operator="over" />
                 </filter>
-
-
               </defs>
-
-
-
-
               <g transform="translate(-61, -61)">
-                <!-- ICON VARIATION 1: CLASSIC 10X EMBLEM -->
                 <g transform="scale(0.3)" style="transform-origin: 100px 100px;">
                   <polygon points="100,12 188,100 100,188 12,100" fill="none" stroke="#2563eb" stroke-width="1.5"
                     stroke-dasharray="4 4" stroke-opacity="0.35" />
@@ -121,18 +116,13 @@
                   <path d="M 132 145 L 175 62 L 165 62 L 188 32 L 188 65 L 178 55 L 142 145 Z"
                     fill="url(#blueGrad_inspector)" />
                   <polygon points="142,42 156,42 188,125 174,125" fill="#2563eb" opacity="0.9" />
-
                 </g>
               </g>
-
-              <!-- TYPOGRAPHY -->
               <g transform="translate(66, 47.64)">
                 <text x="0" y="0" fill="url(#blueGrad_inspector)" filter="url(#glowFilter_inspector)"
                   font-family='"Arial Black", Gadget, sans-serif' font-weight="900" font-size="24px"
                   letter-spacing="0.08em" text-anchor="start" style="text-transform: uppercase;">CRM</text>
-
               </g>
-
             </svg>
           </a>
         </div>
@@ -179,11 +169,69 @@
           <p id="current-time" class="dashboard-header__time">Loading time...</p>
         </div>
 
-        <!-- Content will go here later -->
+        <!-- Stats Section -->
+        <section class="dashboard-stats">
+          <div class="stat-card">
+            <h3 class="stat-card__title">Total Clients</h3>
+            <p id="stat-total" class="stat-card__value">0</p>
+          </div>
+          <div class="stat-card">
+            <h3 class="stat-card__title">Active Deals</h3>
+            <p id="stat-active" class="stat-card__value">0</p>
+          </div>
+          <div class="stat-card">
+            <h3 class="stat-card__title">Won Revenue</h3>
+            <p id="stat-revenue" class="stat-card__value">$0</p>
+          </div>
+          <div class="stat-card">
+            <h3 class="stat-card__title">New This Week</h3>
+            <p id="stat-new" class="stat-card__value">0</p>
+          </div>
+        </section>
+
+        <!-- Bottom Row (Pipeline & Recent Clients) -->
+        <div class="dashboard-bottom-row">
+          <!-- Pipeline Overview Section -->
+          <section class="dashboard-pipeline">
+            <div class="section-header">
+              <h2 class="section-title">Pipeline Overview</h2>
+            </div>
+            <div class="pipeline-container">
+              <div class="pipeline-item pipeline-item--lead">
+                <span class="pipeline-item__label">Lead</span>
+                <span id="pipe-lead" class="pipeline-item__count">0</span>
+              </div>
+              <div class="pipeline-item pipeline-item--contacted">
+                <span class="pipeline-item__label">Contacted</span>
+                <span id="pipe-contacted" class="pipeline-item__count">0</span>
+              </div>
+              <div class="pipeline-item pipeline-item--won">
+                <span class="pipeline-item__label">Won</span>
+                <span id="pipe-won" class="pipeline-item__count">0</span>
+              </div>
+              <div class="pipeline-item pipeline-item--lost">
+                <span class="pipeline-item__label">Lost</span>
+                <span id="pipe-lost" class="pipeline-item__count">0</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Recent Clients Section -->
+          <section class="dashboard-recent">
+            <div class="section-header">
+              <h2 class="section-title">Recent Clients</h2>
+              <a href="clients.html" class="view-all-link">View all clients &rarr;</a>
+            </div>
+            <div class="recent-clients-list" id="recent-clients-container">
+              <!-- Content goes here -->
+            </div>
+          </section>
+        </div>
       </main>
     </div>
   </div>
 
+  <script src="js/dashboard.js"></script>
   <script src="js/app.js"></script>
 </body>
 
